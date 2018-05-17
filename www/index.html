@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+	 <script src="./js/jquery.min.js"></script>
+	<script src="./assets/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+	<link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+	
+    <title>GreyBox Admin</title>
+	 <style>
+body {
+	background-image:url(img/s71.png);
+	background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    height: auto !important;
+    min-height:100%;
+	text-transform:inherit;
+	height: 100%;
+}	
+	</style>
+</head>
+
+<body>
+<script>
+//localStorage["sid"]="";
+	if(localStorage["sid"]!=null ){
+		if(localStorage["sid"].length > 0){
+		//TODO: verify here if sid is active and not blocked else logout
+		
+		var sid = localStorage["sid"];
+		document.location = "dashboard.html"
+		}
+	}
+</script>
+<form>
+
+    <div class="content">
+        <div class="container-fluid">
+		<div class="card">
+			 <div class="panel-body">
+                    <form class="form-horizontal" role="form">
+					<!---<img class='img-thumbnail'  src="img/gb3.png" align="center" />----->
+                    <div class="form-group"><br><br>
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="uname" placeholder="Username" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-3 control-label">
+                            Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="pwd" placeholder="Password" required>
+                        </div>
+                    </div>
+                   
+                    <div class="form-group last">
+                        <div class="col-sm-offset-3 col-sm-9" align="center">
+                            <button type="button" onclick='verify()' class="btn btn-success btn-sm">
+                                Sign in</button>
+                                 <button type="reset" onclick='reset()' class="btn btn-warning btn-sm">
+                                Reset</button><br><br>
+								<p id='footer' class="text-muted" style="color:#a94442;font-size:12px;margin-left:3px"></p>
+                        </div><br>
+						
+                    </div>
+					
+                    </form>
+                </div>
+				
+		</div>		
+		</div>	
+	</div>
+</form>	
+</body>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/dataTbl.js"></script>
+
+<script async defer type="text/javascript">
+app.initialize();
+function verify(){
+     
+	// TODO: queryt to verify credintial(table : s_mobile_reg: sid, otp, enabled)
+	// var sid = document.getElementById('uname').innerHTML;
+	//getData('temp','temp',"SELECT enabled,sid from s_mobile_reg where sid='+sid+'",0,0,102);
+	
+	localStorage["sid"] = 1000129;
+			document.location='dashboard.html'
+	
+}
+function custom(data){
+	if(isset(data[0]['sid'])){
+		if(data[0]['enabled']==1){
+			localStorage["sid"] = data[0]['sid'];
+			document.location='dashboard.html'
+		}
+		else
+			document.getElementById("footer").innerHTML = "Your access is disabled. Please contact service provider.";
+	}
+	else
+		document.getElementById("footer").innerHTML = "Username or Password not correct.<br> Please try again.";
+}
+function reset(){
+	document.getElementById('uname').innerHTML = "";
+	document.getElementById('pwd').innerHTML = "";
+}
+</script>
+
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+	 <script src="./js/jquery.min.js"></script>
+	<script src="./assets/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+	<link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+	<link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+	
+    <title>GreyBox Admin</title>
+</head>
+
+<body>
+<form>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="dashboard.html">GreyBox Admin</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
+        <li class="dropdown">
+		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
+        </li>
+        <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+    <div class="content">
+        <div class="container-fluid">
+		<div class="card">
+			<div id = 'row'></div>
+			<div class="row">
+			
+				<div class="content col-md-3 col-xs-6"><center>
+					<a href="./view_attendance.html">
+					<img class="img-responsive" width="100" height="100" src="./img/attend.png">
+					<h5>Attandence</h5></a></center>
+				</div>
+				<div class="content col-md-3 col-xs-6"><center>
+					<a href="./noticeboard.html">
+					<img class="img-responsive" width="100" height="100" src="./img/notice.png">
+					<h5>Notice board</h5></a></center>
+					</div>
+				<div class="content col-md-3 col-xs-6"><center>
+					<a href="./homework.html">
+					<img class="img-responsive" width="100" height="100" src="./img/hw.png">
+					<h5>Homework</h5></a></center>
+				</div>
+				<div class="content col-md-3 col-xs-6"><center>
+					<a href="./viewfee.html">
+					<img class="img-responsive" width="100" height="100" src="./img/fee.png">
+					<h5>Fee History</h5></a></center>
+				</div>
+				<div class="content col-md-3 col-xs-6"><center>
+					<img class="img-responsive" width="100" height="100" src="./img/result.png">
+					<h5>Result</h5></center>
+				</div>
+				
+			</div>	
+		</div>		
+			
+		</div>	
+		
+	</div>
+</form>	
+</body>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/dataTbl.js"></script>
+
+<script async defer type="text/javascript">
+app.initialize();
+
+</script>
+
+</html>

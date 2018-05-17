@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="msapplication-tap-highlight" content="no" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+      <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+      <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+      
+      <script src="./js/jquery.min.js"></script>
+      <script src="./assets/js/bootstrap.min.js"></script>
+	  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="css/index.css" />
+      <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+      <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+      <title>GreyBox Admin</title>
+	  <style>
+body {
+	background-image:url(img/s71.png);
+	background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    height: auto !important;
+    min-height:100%;
+	text-transform:inherit;
+	height: 100%;
+}	
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding-top: 50px;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+.chat li
+{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px dotted #B3A9A9;
+	background-color:#C5EFF7;
+	text-align:center;
+	height:60px;
+	vertical-align:middle;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+	
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+	width:100%;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.stickyfooter {
+  position: fixed;
+  bottom:0;
+}
+.panel-body
+{
+    overflow-y: scroll;
+	min-height: 560px;
+    height: 100%;
+	padding-top: 50px;
+}
+.panel-footer{
+	padding: 1px 5px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.notesArea {
+	margin-top:30px;
+    float: left;
+    width: 100%;
+    min-height: 200px;
+    background-image: url(./img/notespageback.png);
+    padding: 0;
+	padding-top: 20px;
+}
+
+</style>
+     
+   </head>
+   <body >
+     
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="dashboard.html">GreyBox Homework</a>
+    </div>
+   
+  </div>
+</nav>
+<div class="row">
+   <div class="col-md-5" style="padding-right:0px;padding-left:0px;">
+		<div class="content" >
+        <div class="container-fluid" >
+			<div class="panel-body">
+					
+					<div id="notice" class=''><p style='text-align:center'><br>Hurray!! No Homework</p></div>
+			</div>		
+		 </div>
+    	</div>
+     </div>
+</div>	 
+   </body>
+   <script type="text/javascript" src="cordova.js"></script>
+   <script type="text/javascript" src="js/index.js"></script>
+   <script type="text/javascript" src="js/msg.js"></script>
+   <script>
+	var sid = localStorage.getItem("sid");  
+  
+	  getHWList();
+   
+	
+   </script>
+</html>
