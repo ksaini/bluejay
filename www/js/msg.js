@@ -10,7 +10,8 @@ function getSID(){
 
 function getMessageID(){
 	var sid = localStorage.getItem("mid");
-	if(sid != null)
+	
+	if(sid >0)
 		return sid;
 	else
 		return 0;
@@ -70,14 +71,15 @@ function populateMsg(data){
 			}	
 			else if(data[i]['cid']==localStorage.getItem("cid") ){
 				// Announcements for a given class
-				msgstr += getLeftMsg(data[i]['msg'],"<i class='fa fa-volume-up'></i>",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);
+				msgstr += getLeftMsg(data[i]['msg'],"A",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);
 			}
 			
-			tmp = data[i]['mid'];           
+			tmp = data[i]['mid'];    
+            localStorage.setItem("mid", tmp);			
 		}
 		
-		localStorage.setItem(mid, tmp);
-		chat.innerHTML = msgstr;
+		localStorage.setItem("chat", localStorage.getItem("chat") + msgstr);
+		chat.innerHTML = localStorage.getItem("chat");
 		setTimeout(function(){window.scrollTo(0,document.body.scrollHeight+300);}, 200);
 		
 }
@@ -113,15 +115,12 @@ function getRightMsg(m,id,sid,mid,ts){
 }
 function sendmsg(sid){
 	var msg = document.getElementById("btn-input").value;
+	document.getElementById("btn-input").value=""
 	var sql = "sid=" + sid + "&msg=" + msg;
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			try {
-				//alert(req.responseText);
-				var chat = document.getElementById("chat");
-				chat.innerHTML += getRightMsg(msg,"","","");
-				document.getElementById("btn-input").value="";
 				window.scrollTo(0,document.body.scrollHeight+300);
 								
 			} catch (e) {
@@ -130,9 +129,15 @@ function sendmsg(sid){
 		}
 	};
 	
-	req.open("GET", base_url + "/setMsg.php?" + sql, true);
-	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send();
+	if(msg.trim().length > 0){
+		var chat = document.getElementById("chat");
+		chat.innerHTML += getRightMsg(msg,"","","");
+		window.scrollTo(0,document.body.scrollHeight+300);
+	
+		req.open("GET", base_url + "/setMsg.php?" + sql, true);
+		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		req.send();
+	}
 }
 
 function getHWList(){

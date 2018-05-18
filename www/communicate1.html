@@ -127,7 +127,7 @@ body {
                 
                 <div class="panel-body">
                     <ul class="chat" id="chat">
-                       No communication to show
+                       
                     </ul>
                 </div>
                 <div class="panel-footer stickyfooter">
@@ -152,6 +152,7 @@ body {
 	var mid = getMessageID();
 	getNewMsg(sid,mid);
 	setInterval(function() {
+		mid = getMessageID();
 		getNewMsg(sid,mid);
 		}, 25000);
 	
