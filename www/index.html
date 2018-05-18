@@ -102,14 +102,40 @@ body {
 app.initialize();
 function verify(){
      
-	// TODO: queryt to verify credintial(table : s_mobile_reg: sid, otp, enabled)
-	// var sid = document.getElementById('uname').innerHTML;
-	//getData('temp','temp',"SELECT enabled,sid from s_mobile_reg where sid='+sid+'",0,0,102);
+	var key = "demo";	
+	//localStorage["sid"] = 1000129;
 	
-	localStorage["sid"] = 1000129;
-			document.location='dashboard.html'
+	if(isset(localStorage.getItem("mid") && localStorage.getItem("mid").length > 0)
+		document.location='dashboard.html';
+	else{
+		
+		var sid = verifyUser(document.getElementById('uname').innerHTML,document.getElementById('pwd').innerHTML,key);
+		if(isset(sid) && sid.length >0 && sid.length < 10)
+			localStorage["sid"] = sid;
+		}
 	
 }
+function verifyUser(u,p,k){
+	var sql = "uname=" + u + "&pswd=" + p + "&key=" + k;
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (req.readyState == 4 && req.status == 200) {
+			try {
+				//alert(req.responseText);
+				var dataArray=JSON.parse(req.responseText);
+				custom(dataArray);
+								
+			} catch (e) {
+				console.log("Exception::-"+e.toString());
+			}
+		}
+	};
+	
+	req.open("GET", base_url + "/verifyUser.php?" + sql, true);
+	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.send();
+}
+
 function custom(data){
 	if(isset(data[0]['sid'])){
 		if(data[0]['enabled']==1){
