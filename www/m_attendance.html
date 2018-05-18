@@ -185,6 +185,7 @@
    <script type="text/javascript" src="cordova.js"></script>
    <script type="text/javascript" src="js/index.js"></script>
    <script type="text/javascript" src="js/dataTbl.js"></script>
+   <script type="text/javascript" src="js/msg.js"></script>
    
    <script>
 Date.prototype.toDateInputValue = (function() {
@@ -214,9 +215,7 @@ Date.prototype.toDateInputValue = (function() {
       			}
       		}
       	};
-      	
-      	var base_url = "http://theqalabs.com/mobile/www";//"http://localhost/pgexample/appSample/www";
-      	
+      
       	req.open("GET", base_url + "/getLeaves.php?" +sql, true);
       	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
       	
