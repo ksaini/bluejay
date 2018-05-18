@@ -86,7 +86,8 @@ function getLeftMsg(m,id,sid,mid,ts){
 	var icon = "R";
 	
 	msg = "<li id='m_"+mid+"' class='left clearfix'><span class='chat-img pull-left'>";
-	msg += "<img src='http://placehold.it/45/55C1E7/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	msg += "<img src='img/r.png' alt='User Avatar' class='img-circle' /></span>";
+	//msg += "<div style='border-radius: 50%;width:40px;height:40px;background: #55C1E7;' >"+icon+"</div></span>";
     msg += "<div class='chat-body clearfix'><div class='header'>";
 	msg += "<strong class='primary-font'>"+ id +"</strong> <small style='font-size:8px;' class='pull-right text-muted'>";
 	msg += "<i class='fa fa-clock-o'></i></span> "+formatDateY(ts)+" </small></div>";
@@ -99,7 +100,8 @@ function getRightMsg(m,id,sid,mid,ts){
 	var icon = "ME";
 	
 	msg = "<li id='m_"+mid+"' class='right clearfix' style='background-color:#e6fff9;'><span class='chat-img pull-right'>";
-	msg += "<img src='http://placehold.it/45/ff9933/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	//msg += "<img src='http://placehold.it/45/ff9933/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	msg += "<img src='img/me.png' alt='User Avatar' class='img-circle' /></span>";
     msg += "<div class='chat-body clearfix' ><div class=' header'>";
 	msg += "<strong class='pull-right primary-font'>"+ id +"</strong> </div>";
 	msg += "<p style='text-align:right;padding-top:5px;'>" + m ;
@@ -179,7 +181,7 @@ function showHW(dt){
 						var imgs = data[i]['imgs'].split(',');
 						var im = "";
 						for (var x=0; x< imgs.length; x++){
-							im +="<img src='"+imgs[x]+"' class='img-thumbnail'  alt='HW Image'  />";
+							im +="<br><img src='"+imgs[x]+"' class='img-thumbnail'  alt='HW Image'  />";
 						}
 						hw.innerHTML += im;
 					}
@@ -217,9 +219,12 @@ function formatDateY(dt){
 		var dateObj = new Date(dt);
 		var month = dateObj.getUTCMonth() + 1; //months from 1-12
 		var day = dateObj.getUTCDate();
+		var m = dateObj.getMinutes();
+		if(m < 10)
+			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":0" +dateObj.getMinutes() + " " ;
+		else
+			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() + " " ;
 		
-
-		newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() ;
 		return newdate;
 	} catch(e){return dt;}
 }
