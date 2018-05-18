@@ -144,6 +144,8 @@ function getHWList(){
 				var hwlist = document.getElementById("notice");
 				hwlist.innerHTML = "";
 				var data=JSON.parse(req.responseText);
+				if(data.length<1)
+					hwlist.innerHTML = "<br>Hurray!! No Homework";
 				var txt = "<ul class='chat' id='chat'>";
 				for(var i=0; i < data.length; i++){
 					var d = data[i]['hwdate'];
