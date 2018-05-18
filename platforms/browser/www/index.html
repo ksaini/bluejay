@@ -26,10 +26,17 @@
 	<link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 	
     <title>GreyBox Admin</title>
-	<style>
-	body {
-		text-transform:none;
-	}
+	 <style>
+body {
+	background-image:url(img/s71.png);
+	background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    height: auto !important;
+    min-height:100%;
+	text-transform:inherit;
+	height: 100%;
+}	
 	</style>
 </head>
 
@@ -52,7 +59,8 @@
 		<div class="card">
 			 <div class="panel-body">
                     <form class="form-horizontal" role="form">
-                    <div class="form-group"><br><br><br>
+					<!---<img class='img-thumbnail'  src="img/gb3.png" align="center" />----->
+                    <div class="form-group"><br><br>
                         <label for="inputEmail3" class="col-sm-3 control-label">
                             Username</label>
                         <div class="col-sm-9">
@@ -68,10 +76,10 @@
                     </div>
                    
                     <div class="form-group last">
-                        <div class="col-sm-offset-3 col-sm-9">
+                        <div class="col-sm-offset-3 col-sm-9" align="center">
                             <button type="button" onclick='verify()' class="btn btn-success btn-sm">
                                 Sign in</button>
-                                 <button type="reset" onclick='reset()' class="btn btn-default btn-sm">
+                                 <button type="reset" onclick='reset()' class="btn btn-warning btn-sm">
                                 Reset</button><br><br>
 								<p id='footer' class="text-muted" style="color:#a94442;font-size:12px;margin-left:3px"></p>
                         </div><br>
@@ -88,25 +96,52 @@
 </body>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<script type="text/javascript" src="js/dataTbl.js"></script>
+<script type="text/javascript" src="js/msg.js"></script>
 
 <script async defer type="text/javascript">
 app.initialize();
 function verify(){
-	// TODO: queryt to verify credintial(table : s_mobile_reg: sid, otp, enabled)
-	// var sid = document.getElementById('uname').innerHTML;
-	//getData('temp','temp',"SELECT enabled,sid from s_mobile_reg where sid='+sid+'",0,0,102);
+     
+	var key = "demo";	
+	//localStorage["sid"] = 1000129;
+	
+	if(localStorage.getItem("sid")!=null && localStorage.getItem("sid").length > 0)
+		document.location='dashboard.html';
+	else{
+		
+		var sid = verifyUser(document.getElementById('uname').value,document.getElementById('pwd').value,key);
+		if(sid!=null && sid.length >0 && sid.length < 10)
+			localStorage["sid"] = sid;
+		}
 	
 }
-function custom(data){
-	if(isset(data[0]['sid'])){
-		if(data[0]['enabled']==1){
-			localStorage["sid"] = data[0]['sid'];
-			document.location='dashboard.html'
+function verifyUser(u,p,k){
+	var sql = "uname=" + u + "&pswd=" + p + "&key=" + k;
+	var req = new XMLHttpRequest();
+	req.onreadystatechange = function() {
+		if (req.readyState == 4 && req.status == 200) {
+			try {
+				//alert(req.responseText);
+				//var dataArray=JSON.parse(req.responseText);
+				custom(req.responseText);
+								
+			} catch (e) {
+				console.log("Exception::-"+e.toString());
+			}
 		}
-		else
-			document.getElementById("footer").innerHTML = "Your access is disabled. Please contact service provider.";
-	}
+	};
+	
+	req.open("GET", base_url + "/verifyUser.php?" + sql, true);
+	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	req.send();
+}
+
+function custom(data){
+	if(data!=null){
+		
+			localStorage["sid"] = data;
+			document.location='dashboard.html';
+		}
 	else
 		document.getElementById("footer").innerHTML = "Username or Password not correct.<br> Please try again.";
 }

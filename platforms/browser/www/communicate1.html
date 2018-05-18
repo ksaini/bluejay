@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta charset="utf-8" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="msapplication-tap-highlight" content="no" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+      <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+      <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+      <script src="./js/jquery.min.js"></script>
+      <script src="./assets/js/bootstrap.min.js"></script>
+	  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="css/index.css" />
+      <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+      <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+      <title>GreyBox Admin</title>
+<style>
+body {
+	text-transform:inherit;
+	
+}
+
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+	background-image:url(img/s72.png);
+}
+
+.chat li
+{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+	
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+	width:100%;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.stickyfooter {
+  position: fixed;
+  bottom:0;
+}
+.panel-body
+{
+    overflow-y: scroll;
+	min-height: 560px;
+    height: 100%;
+	padding-top: 50px;
+}
+.panel-footer{
+	padding: 1px 5px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+</style>
+<script src='js/msg.js'></script>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom:0px;">
+  <div class="container-fluid">
+    <div class="navbar-header ">
+      
+      <a class="navbar-brand" href="dashboard.html">GreyBox Chat</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
+        <li class="dropdown">
+		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
+        </li>
+        <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5" style="padding-right:0px;padding-left:0px;">
+            <div class="panel panel-primary">
+                
+                <div class="panel-body">
+                    <ul class="chat" id="chat">
+                       No communication to show
+                    </ul>
+                </div>
+                <div class="panel-footer stickyfooter">
+                    <div class="input-group" id="panel-footer">
+                        <input id="btn-input" type="text" style="height:41px;" class="form-control input-sm" placeholder="Type your message here..." />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="btn-chat" style="height:42px;" onclick="sendmsg(getSID());">Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src='js/dataTbl.js'></script>
+<script src='js/msg.js'></script>
+<script>
+	//localStorage.clear();
+	//localStorage.setItem("sid", "1000129");
+	var sid = getSID();
+	var mid = getMessageID();
+	getNewMsg(sid,mid);
+	setInterval(function() {
+		getNewMsg(sid,mid);
+		}, 25000);
+	
+	
+	//populateRemoteMsg();
+</script>	
+<script>
+
+</script>
+	
+</html>

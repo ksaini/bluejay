@@ -6,12 +6,12 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>appSample</name>
+    <name>BlueJay</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        School management App for Parents powered by GreyBox Software 
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+        GreyBox Team
     </author>
     <content src="index.html" />
     <access origin="*" />

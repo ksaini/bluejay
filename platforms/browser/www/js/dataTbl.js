@@ -2,7 +2,7 @@ var dataArray=new Array();
 var schoolname= "JSS Public School";
 var address ="Sector 71, Delhi";
 var scn1 = "";
-
+var base_url = "http://greyboxerp.com/bot";
 
 
 function schoolDetails(data){
@@ -60,8 +60,7 @@ function getData(tblId,tblHdrId, q, addRow,deleteRow, procFn) {
 		}
 	};
 	
-	var base_url = "http://theqalabs.com/mobile/www";//"http://localhost/pgexample/appSample/www";
-	
+		
 	req.open("GET", base_url + "/dataTbl.php?" +  sql, true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send();
@@ -675,3 +674,4 @@ function endOfLastMonth(){
     local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
     return local.toJSON().slice(0,10);
 }
+

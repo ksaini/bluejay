@@ -1,0 +1,17 @@
+.markread {
+	border:1px solid #ddd; 
+	background-color:#FCF3CF;
+	font-size:11px;
+}
+
+.srch {
+	padding-bottom: 2px;
+    padding-top: 3px;
+    margin-top: -3px;
+	height: 40px;
+	background:#fff;
+	width: 202px;
+	border:1px solid #ddd; 
+	
+	
+}

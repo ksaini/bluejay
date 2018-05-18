@@ -7,152 +7,152 @@
       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
       <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
       <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-      <!-- Good default declaration:
-         * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-         * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-         * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-             * Enable inline JS: add 'unsafe-inline' to default-src
-             * Enable eval(): add 'unsafe-eval' to default-src
-         * Create your own at http://cspisawesome.com
-         -->
-      <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+      
       <script src="./js/jquery.min.js"></script>
       <script src="./assets/js/bootstrap.min.js"></script>
+	  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="css/index.css" />
       <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
       <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
       <title>GreyBox Admin</title>
-      <style>
-		 .row {
-		margin-right: 0px;
-		margin-left: 0px;
-		}
-         .container-fluid {
-         padding-right: 0px;
-         padding-left: 0px;
-         }
-         .col-lg-1,
-         .col-lg-10,
-         .col-lg-11,
-         .col-lg-12,
-         .col-lg-2,
-         .col-lg-3,
-         .col-lg-4,
-         .col-lg-5,
-         .col-lg-6,
-         .col-lg-7,
-         .col-lg-8,
-         .col-lg-9,
-         .col-md-1,
-         .col-md-10,
-         .col-md-11,
-         .col-md-12,
-         .col-md-2,
-         .col-md-3,
-         .col-md-4,
-         .col-md-5,
-         .col-md-6,
-         .col-md-7,
-         .col-md-8,
-         .col-md-9,
-         .col-sm-1,
-         .col-sm-10,
-         .col-sm-11,
-         .col-sm-12,
-         .col-sm-2,
-         .col-sm-3,
-         .col-sm-4,
-         .col-sm-5,
-         .col-sm-6,
-         .col-sm-7,
-         .col-sm-8,
-         .col-sm-9,
-         .col-xs-1,
-         .col-xs-10,
-         .col-xs-11,
-         .col-xs-12,
-         .col-xs-2,
-         .col-xs-3,
-         .col-xs-4,
-         .col-xs-5,
-         .col-xs-6,
-         .col-xs-7,
-         .col-xs-8,
-         .col-xs-9 {
-         position: relative;
-         min-height: 1px;
-         padding-right: 0px;
-         padding-left: 0px;
-         }
-		 .container-fluid>.navbar-collapse,
-.container-fluid>.navbar-header,
-.container>.navbar-collapse,
-.container>.navbar-header {
-    margin-right: 0px;
-    margin-left: 0px;
+	  <style>
+body {
+	background-image:url(img/s71.png);
+	background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    height: auto !important;
+    min-height:100%;
+	text-transform:inherit;
+	height: 100%;
+}	
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding-top: 50px;
+	padding-left:5px;
+	padding-right:5px;
 }
-	.notesArea {
+
+.chat li
+{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px dotted #B3A9A9;
+	background-color:#C5EFF7;
+	text-align:center;
+	height:60px;
+	vertical-align:middle;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+	
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+	width:100%;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+.stickyfooter {
+  position: fixed;
+  bottom:0;
+}
+.panel-body
+{
+    overflow-y: scroll;
+	min-height: 560px;
+    height: 100%;
+	padding-top: 50px;
+}
+.panel-footer{
+	padding: 1px 5px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+.notesArea {
+	margin-top:30px;
     float: left;
     width: 100%;
-    min-height: 300px;
+    min-height: 200px;
     background-image: url(./img/notespageback.png);
     padding: 0;
-      </style>
+	padding-top: 20px;
+}
+
+</style>
+     
    </head>
    <body >
      
-         <nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="dashboard.html">GreyBox Admin</a>
+      <a class="navbar-brand" href="dashboard.html">GreyBox Homework</a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
-        <li class="dropdown">
-		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
-        </li>
-        <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
-      </ul>
-      
-    </div>
+   
   </div>
 </nav>
-         <div class="content" >
-         <div class="container-fluid" >
-           <div id="notice" class='notesArea'></div>
+<div class="row">
+   <div class="col-md-5" style="padding-right:0px;padding-left:0px;">
+		<div class="content" >
+        <div class="container-fluid" >
+			<div class="panel-body">
+					
+					<div id="notice" class=''><p style='text-align:center'><br>Hurray!! No Homework</p></div>
+			</div>		
 		 </div>
-		 </div>
-     
+    	</div>
+     </div>
+</div>	 
    </body>
    <script type="text/javascript" src="cordova.js"></script>
    <script type="text/javascript" src="js/index.js"></script>
-   <script type="text/javascript" src="js/dataTbl.js"></script>
-   <script async defer type="text/javascript">
-      //getData('temp','temp',"SELECT * from s_notice_tbl order by id desc;",0,0,102);
-	  fn1();
-	 
+   <script type="text/javascript" src="js/msg.js"></script>
+   <script>
+	var sid = localStorage.getItem("sid");  
+  
+	  getHWList();
    
-  function fn1(){
-	 
-	//  for (var i = 0; i < 10; i++) {
-	 // var dt = "";
-	  //if(data[i]['date']!==null)
-	//	dt = data[i]['date'];
-		
-			
-      	document.getElementById('notice').innerHTML += "<div  style='height: 60px;font-family:Comic Sans MS;text-transform:capitalize;'><p style='margin-left:10px'><small style='color:orange;'>" + "4-Dec-2017" + "</small><br>" + "<b> English </b> : Complete Questions 3,4,8 from Chapter 8, English grammer." 
-		+ "<b> Maths </b>: Find derivation of Euler's theorem, use calculas if required.</div><br>";	
-
-		document.getElementById('notice').innerHTML += "<br><div  style='height: 60px;font-family:Comic Sans MS;text-transform:capitalize;'><p style='margin-left:10px'><small style='color:orange;'>" + "1-Dec-2017" + "</small><br>" + "<b>EVS </b>:Complete project for enviornment studies. Show how energy footprint can be reduced with modern da technologies." 
-		+ "<br><b> Maths </b>: Repet classwork for Maths <br><b>Social studies</b>: Go through chapter 5 history and highlight key moments of indian freedome movement.</div><br>";		
-     // }		
-  }
-      
+	
    </script>
 </html>
