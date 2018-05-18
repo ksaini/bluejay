@@ -96,7 +96,7 @@ body {
 </body>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
-<!----<script type="text/javascript" src="js/dataTbl.js"></script>---->
+<script type="text/javascript" src="js/msg.js"></script>
 
 <script async defer type="text/javascript">
 app.initialize();
@@ -105,12 +105,12 @@ function verify(){
 	var key = "demo";	
 	//localStorage["sid"] = 1000129;
 	
-	if(isset(localStorage.getItem("mid") && localStorage.getItem("mid").length > 0)
+	if(localStorage.getItem("sid")!=null && localStorage.getItem("sid").length > 0)
 		document.location='dashboard.html';
 	else{
 		
-		var sid = verifyUser(document.getElementById('uname').innerHTML,document.getElementById('pwd').innerHTML,key);
-		if(isset(sid) && sid.length >0 && sid.length < 10)
+		var sid = verifyUser(document.getElementById('uname').value,document.getElementById('pwd').value,key);
+		if(sid!=null && sid.length >0 && sid.length < 10)
 			localStorage["sid"] = sid;
 		}
 	
@@ -122,8 +122,8 @@ function verifyUser(u,p,k){
 		if (req.readyState == 4 && req.status == 200) {
 			try {
 				//alert(req.responseText);
-				var dataArray=JSON.parse(req.responseText);
-				custom(dataArray);
+				//var dataArray=JSON.parse(req.responseText);
+				custom(req.responseText);
 								
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
@@ -137,14 +137,11 @@ function verifyUser(u,p,k){
 }
 
 function custom(data){
-	if(isset(data[0]['sid'])){
-		if(data[0]['enabled']==1){
-			localStorage["sid"] = data[0]['sid'];
-			document.location='dashboard.html'
+	if(data!=null){
+		
+			localStorage["sid"] = data;
+			document.location='dashboard.html';
 		}
-		else
-			document.getElementById("footer").innerHTML = "Your access is disabled. Please contact service provider.";
-	}
 	else
 		document.getElementById("footer").innerHTML = "Username or Password not correct.<br> Please try again.";
 }
