@@ -69,9 +69,9 @@ function populateMsg(data){
 				// Individual repl to student
 				msgstr += getLeftMsg(data[i]['msg'],"",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);				
 			}	
-			else if(data[i]['cid']==localStorage.getItem("cid") ){
+			else { //if(data[i]['cid']==localStorage.getItem("cid") )
 				// Announcements for a given class
-				msgstr += getLeftMsg(data[i]['msg'],"A",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);
+				msgstr += getLeftMsg(data[i]['msg'],"<i class='fa fa-volume-up'></i>",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);
 			}
 			
 			tmp = data[i]['mid'];    
