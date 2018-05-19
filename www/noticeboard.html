@@ -26,76 +26,63 @@
 	
 	height: 100%;
 }	
+body {
+	text-transform:inherit;
+}
 
-		 .row {
-		margin-right: 0px;
-		margin-left: 0px;
-		}
-         .container-fluid {
-         padding-right: 0px;
-         padding-left: 0px;
-         }
-         .col-lg-1,
-         .col-lg-10,
-         .col-lg-11,
-         .col-lg-12,
-         .col-lg-2,
-         .col-lg-3,
-         .col-lg-4,
-         .col-lg-5,
-         .col-lg-6,
-         .col-lg-7,
-         .col-lg-8,
-         .col-lg-9,
-         .col-md-1,
-         .col-md-10,
-         .col-md-11,
-         .col-md-12,
-         .col-md-2,
-         .col-md-3,
-         .col-md-4,
-         .col-md-5,
-         .col-md-6,
-         .col-md-7,
-         .col-md-8,
-         .col-md-9,
-         .col-sm-1,
-         .col-sm-10,
-         .col-sm-11,
-         .col-sm-12,
-         .col-sm-2,
-         .col-sm-3,
-         .col-sm-4,
-         .col-sm-5,
-         .col-sm-6,
-         .col-sm-7,
-         .col-sm-8,
-         .col-sm-9,
-         .col-xs-1,
-         .col-xs-10,
-         .col-xs-11,
-         .col-xs-12,
-         .col-xs-2,
-         .col-xs-3,
-         .col-xs-4,
-         .col-xs-5,
-         .col-xs-6,
-         .col-xs-7,
-         .col-xs-8,
-         .col-xs-9 {
-         position: relative;
-         min-height: 1px;
-         padding-right: 0px;
-         padding-left: 0px;
-         }
-		 .container-fluid>.navbar-collapse,
-.container-fluid>.navbar-header,
-.container>.navbar-collapse,
-.container>.navbar-header {
-    margin-right: 0px;
-    margin-left: 0px;
+.chat
+{
+    list-style: none;
+    margin: 0;
+	padding-left:0px;
+	padding-right:0px;
+    padding-top: 45px;;
 	
 }
+
+.chat li
+{
+    margin-bottom: 2px;
+    padding-bottom: 2px;
+    border-bottom: 1px dotted #B3A9A9;
+	background-color:white;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+	
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+	width:100%;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.notesArea {
+	margin-top:15px;
+    float: left;
+    width: 100%;
+    min-height: 30px;
+    background-image: url(./img/notespageback.png);
+    padding: 0;
+	padding-top: 5px;
+	font-family:Comic Sans MS;
+}
+		
 .navbar-custom{
 	background-color: #1E8BC3;
 }
@@ -106,7 +93,7 @@ a{
    </head>
    <body >
      
-         <nav class="navbar navbar-custom">
+         <nav class="navbar navbar-custom navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" style="width:100%;text-align:center;" href="dashboard.html"><i style="position: absolute;left:5px;;" class="fa fa-home" aria-hidden="true"></i> <span>Notice</span></a>
@@ -124,24 +111,44 @@ a{
    </body>
    <script type="text/javascript" src="cordova.js"></script>
    <script type="text/javascript" src="js/index.js"></script>
-   <script type="text/javascript" src="js/dataTbl.js"></script>
-   <script async defer type="text/javascript">
-      getData('temp','temp',"SELECT * from s_notice_tbl order by id desc;",0,0,102);
-	  
-	 
+   <script type="text/javascript" src="js/msg.js"></script>
+   <script  type="text/javascript">
+   getNotice();
+	function getNotice()
+      {
+      	var req = new XMLHttpRequest();
+      	req.onreadystatechange = function() {
+      		if (req.readyState == 4 && req.status == 200) {
+      			try {
+      				var data=JSON.parse(req.responseText);
+      				custom(data)
+      			} catch (e) {
+      				console.log("Exception::-"+e.toString());
+      			}
+      		}
+      	};
+      
+      	req.open("GET", base_url + "/getNotice.php", true);
+      	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      	req.send();
+      }
+ 
    </script>
    
    <script>
-  function custom(data,val){
-	 
-	  for (var i = 0; i < 10; i++) {
-	  var dt = "";
-	  if(data[i]['date']!==null)
-		dt = data[i]['date'];
-		
-			
-      	document.getElementById('notice').innerHTML += "<div style='background-color:#A3E4D7;height: 60px;font-family:Comic Sans MS;text-transform:capitalize;'><p style='margin-left:10px'><small style='color:orange;'>" + dt+ "</small><br>" + data[i]['notice'] + "</p></div><br>";		
-      }		
+  function custom(data){
+	  var nlist = document.getElementById("notice");	
+	  var txt = "<ul class='chat' id='chat'>";
+	  for(var i=0; i < data.length; i++){
+		var id = data[i]['id'];
+		txt += "<li id='dt_"+ id +"' class='clearfix text-muted notesArea' >";
+		txt += "<p style='padding-top:10px;'><label>" + formatDate(data[i]['st_dt']) + "</label></p>";
+		txt += "<p style='margin-left:10px'>"+data[i]['notice']+"<br></p>";
+		if(data[i]['img'].trim().length>0)
+			txt += "<img src='"+data[i]['img']+"' class='img-thumbnail'  alt='Notice Image'  />";
+		txt +="</li>"
+	}
+	nlist.innerHTML += txt + "</ul>";
   }
       
    </script>

@@ -234,7 +234,7 @@ Date.prototype.toDateInputValue = (function() {
       function custom(data){
 		document.getElementById('details').innerHTML = "";
 			for (var i = 0; i < data.length; i++) {
-				document.getElementById('details').innerHTML += data[i]['day'] + " - " + data[i]['status'] + "<br>";
+				document.getElementById('details').innerHTML += formatDate(data[i]['day']) + " - " + data[i]['status'] + "<br>";
 			}
 	  }
       function fillStudentDetails()
