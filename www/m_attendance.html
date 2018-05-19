@@ -10,6 +10,7 @@
      
       <script src="./js/jquery.min.js"></script>
       <script src="./assets/js/bootstrap.min.js"></script>
+	   <link href="assets/css/font-awesome.min.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="css/index.css" />
       <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
       <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
@@ -93,19 +94,20 @@
     margin-right: 0px;
     margin-left: 0px;
 }
+.navbar-custom{
+	background-color: #1E8BC3;
+}
+a{
+	color:white
+}
       </style>
    </head>
    <body >
       <form>
-        <nav class="navbar navbar-inverse">
+        <nav class="navbar navbar-custom">
   <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="dashboard.html">GreyBox Admin</a>
+   <div class="navbar-header">
+      <a class="navbar-brand" style="width:100%;text-align:center;" href="dashboard.html"><i style="position: absolute;left:5px;;" class="fa fa-home" aria-hidden="true"></i> <span>Attendance</span></a>  
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -132,7 +134,7 @@
                         <div class="header">
                            <p class="title" id='sname' style="font-size:18px;" >Welcome </p>
                         </div>
-                        <br>
+                        
                         <div class="content">
                            <div class='row'>
                               <div class="col-md-3 col-xs-6 text-muted">
@@ -155,7 +157,7 @@
 								<div class="col-md-12 col-xs-12" style="background-color:#faffbd">
 									
 									<p class='title' align='center' id="attend" style="font-size:75px"></p>
-									<br>
+									
 							    </div>
                               <div class="col-md-12 col-xs-12" style="background-color:#faffbd" >
 								<label id="leave"></label>
@@ -164,7 +166,7 @@
 						   <div >
                            
                         </div>
-                           <small><a href='#' onclick='document.getElementById("details").style.display = "block";fillDetails();'>Details</a></small>
+                           <small><a href='#' onclick='document.getElementById("details").style.display = "block";'>Details</a></small>
 						   <br>
 						   <div id='details' style="display:none;" class="text-muted"></div>
                         </div>
@@ -208,7 +210,7 @@ Date.prototype.toDateInputValue = (function() {
       				document.getElementById('attend').innerHTML = Math.floor((data['max']-data['tot'])*100/data['max']) + "%";//data['tot'] + "/" + data['max'];
       				document.getElementById('leave').innerHTML = "L=" + data['leaves'] + ",A=" + data['absent'] + ", Total=" + data['max']; 
 					
-					
+					custom(data['details']);
       				
       			} catch (e) {
       				console.log("Exception::-"+e.toString());
@@ -227,27 +229,19 @@ Date.prototype.toDateInputValue = (function() {
       
       fillAttendance(id);
      
-	 function fillDetails(){
-       getData('details','details','SELECT day,status from s_attend_tbl where sid='+id+';',0,0,102);
-      }
-     
    </script>
    <script>
-      function custom(data,val){
-      	
-		if(val==102){
+      function custom(data){
 		document.getElementById('details').innerHTML = "";
 			for (var i = 0; i < data.length; i++) {
 				document.getElementById('details').innerHTML += data[i]['day'] + " - " + data[i]['status'] + "<br>";
 			}
-		}		
-      		
-      }
+	  }
       function fillStudentDetails()
       {
       		document.getElementById('admn').innerHTML = localStorage.getItem("sid");
       		document.getElementById('sname').innerHTML += " " ;//+ localStorage.getItem("sname");
-      		document.getElementById('fname').innerHTML = dlocalStorage.getItem("fathername");
+      		document.getElementById('fname').innerHTML = localStorage.getItem("fathername");
       		
       	
       }

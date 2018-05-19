@@ -7,17 +7,10 @@
       <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
       <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
       <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
-      <!-- Good default declaration:
-         * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-         * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-         * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-             * Enable inline JS: add 'unsafe-inline' to default-src
-             * Enable eval(): add 'unsafe-eval' to default-src
-         * Create your own at http://cspisawesome.com
-         -->
-      <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+      
       <script src="./js/jquery.min.js"></script>
       <script src="./assets/js/bootstrap.min.js"></script>
+	  <link href="assets/css/font-awesome.min.css" rel="stylesheet">
       <link rel="stylesheet" type="text/css" href="css/index.css" />
       <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
       <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
@@ -101,32 +94,25 @@
 .container>.navbar-header {
     margin-right: 0px;
     margin-left: 0px;
+	
 }
-
+.navbar-custom{
+	background-color: #1E8BC3;
+}
+a{
+	color:white
+}
       </style>
    </head>
    <body >
      
-         <nav class="navbar navbar-inverse">
+         <nav class="navbar navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="dashboard.html">GreyBox Admin</a>
+      <a class="navbar-brand" style="width:100%;text-align:center;" href="dashboard.html"><i style="position: absolute;left:5px;;" class="fa fa-home" aria-hidden="true"></i> <span>Notice</span></a>
+	 
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
-        <li class="dropdown">
-		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
-        </li>
-        <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
-      </ul>
-      
-    </div>
+    
   </div>
 </nav>
          <div class="content" >

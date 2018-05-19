@@ -177,7 +177,7 @@ function showHW(dt){
 			try {
 				var hw = document.getElementById("notice");
 				localStorage.setItem("hwlist",hw.innerHTML);  
-				hw.innerHTML = "<div id='back'><i class='fa fa-arrow-circle-left' onclick='backHW();'></i> &nbsp; Back</div><br>";
+				hw.innerHTML = "<div id='back'><i class='fa fa-2x fa-arrow-circle-left' onclick='backHW();'></i> &nbsp; Back</div><br>";
 				hw.classList.add('notesArea');
 				var data=JSON.parse(req.responseText);
 	
