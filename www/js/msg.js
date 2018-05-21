@@ -181,11 +181,12 @@ function sendmsg(sid){
 }
 
 function getHWList(){
-
+	
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
-		if (req.readyState == 4 && req.status == 200) {
-			try {
+		if (req.readyState == 4){
+			if(req.status == 200){
+			 try {
 				var hwlist = document.getElementById("notice");
 				hwlist.innerHTML = "";
 				var data=JSON.parse(req.responseText);
@@ -199,9 +200,10 @@ function getHWList(){
 				}
 					
 				hwlist.innerHTML += txt + "</ul>";
-			} catch (e) {
+			 } catch (e) {
 				console.log("Exception::-"+e.toString());
-			}
+			 }
+			}else {document.getElementById("notice").innerHTML = "<ul class='chat' id='chat'><li class='clearfix text-muted'><label>No Internet Connection!</label></li></ul>"}
 		}
 	};
 	
