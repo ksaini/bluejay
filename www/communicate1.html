@@ -144,12 +144,14 @@ a{
 <script>
 	//localStorage.clear();
 	//localStorage.setItem("sid", "1000129");
+	localStorage.setItem("tmpmsg","");
 	var sid = getSID();
 	var mid = getMessageID();
 	getNewMsg(sid,mid);
 	setInterval(function() {
 		mid = getMessageID();
 		getNewMsg(sid,mid);
+		sendmsg(sid);
 		}, 25000);
 	
 	

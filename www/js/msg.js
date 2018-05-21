@@ -32,6 +32,8 @@ function populateLocalMsg(mid){
 }
 
 function getNewMsg(sid,mid){
+	chat.innerHTML = localStorage.getItem("chat");
+	setTimeout(function(){window.scrollTo(0,document.body.scrollHeight+300);}, 200);
 	
 	var sql = "sid=" + sid + "&mid=" + mid;
 	var req = new XMLHttpRequest();
@@ -78,10 +80,32 @@ function populateMsg(data){
             localStorage.setItem("mid", tmp);			
 		}
 		
-		localStorage.setItem("chat", localStorage.getItem("chat") + msgstr);
-		chat.innerHTML = localStorage.getItem("chat");
+		
+		localStorage.setItem("chat", manageStoredMsg(100,20) + msgstr);
+		chat.innerHTML += msgstr; //localStorage.getItem("chat");
 		setTimeout(function(){window.scrollTo(0,document.body.scrollHeight+300);}, 200);
 		
+}
+
+function manageStoredMsg(limit,last){
+	//Keep check on size of storeg messages locally
+	//If messages excedes limit(100) remove last(20) messages
+	// Else return original stored msg
+	
+	var el = document.createElement( 'body' );
+	el.innerHTML = localStorage.getItem("chat");
+
+	var li = el.getElementsByTagName( 'li' );
+	
+	if(li.length > limit){
+		var t = "";
+		while (last--)	{
+			t +=li[last].id;
+			el.removeChild(li[last]);
+		}
+		
+	}
+	return el.innerHTML;
 }
 
 function getLeftMsg(m,id,sid,mid,ts){
@@ -116,12 +140,14 @@ function getRightMsg(m,id,sid,mid,ts){
 function sendmsg(sid){
 	var msg = document.getElementById("btn-input").value;
 	document.getElementById("btn-input").value=""
-	var sql = "sid=" + sid + "&msg=" + msg;
+	
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			try {
 				window.scrollTo(0,document.body.scrollHeight+300);
+				//if able to send message clear the tmpmsg
+				localStorage.setItem("tmpmsg","");
 								
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
@@ -129,9 +155,23 @@ function sendmsg(sid){
 		}
 	};
 	
-	if(msg.trim().length > 0){
+	if( (msg.trim().length > 0) || localStorage.getItem("tmpmsg").length > 0){
+		//store messages in localstorage so that if client is not connected
+		// we can post message later.
+		var sql = "";
+		var tmpmsg = localStorage.getItem("tmpmsg");
+		localStorage.setItem("tmpmsg",tmpmsg + "<br>" + msg);
+		
 		var chat = document.getElementById("chat");
-		chat.innerHTML += getRightMsg(msg,"","","");
+		
+		if(tmpmsg.length > 0){
+			sql = "sid=" + sid + "&msg=" + tmpmsg + "<br>" + msg;
+			chat.innerHTML += getRightMsg(tmpmsg + "<br>" + msg,"","","");
+		}
+		else{
+			sql = "sid=" + sid + "&msg=" + msg;
+			chat.innerHTML += getRightMsg(msg,"","","");
+		}
 		window.scrollTo(0,document.body.scrollHeight+300);
 	
 		req.open("GET", base_url + "/setMsg.php?" + sql, true);
@@ -222,6 +262,7 @@ function formatDate(dt){
 	} catch(e){return dt;}
 }
 function formatDateY(dt){
+	if(dt == null) return "Sending..";
 	try{
 		var dateObj = new Date(dt);
 		var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -231,7 +272,7 @@ function formatDateY(dt){
 			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":0" +dateObj.getMinutes() + " " ;
 		else
 			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() + " " ;
-		
+				
 		return newdate;
 	} catch(e){return dt;}
 }

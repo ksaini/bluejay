@@ -113,6 +113,9 @@ a{
    <script type="text/javascript" src="js/index.js"></script>
    <script type="text/javascript" src="js/msg.js"></script>
    <script  type="text/javascript">
+   if(localStorage.getItem("notice") !=null)
+	document.getElementById('notice').innerHTML = localStorage.getItem("notice") ;
+	
    getNotice();
 	function getNotice()
       {
@@ -148,7 +151,8 @@ a{
 			txt += "<img src='"+data[i]['img']+"' class='img-thumbnail'  alt='Notice Image'  />";
 		txt +="</li>"
 	}
-	nlist.innerHTML += txt + "</ul>";
+	nlist.innerHTML = txt + "</ul>";
+	localStorage.setItem("notice", nlist.innerHTML);
   }
       
    </script>
