@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta name="msapplication-tap-highlight" content="no" />
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+      <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+      <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+     
+      <script src="./js/jquery.min.js"></script>
+      <script src="./assets/js/bootstrap.min.js"></script>
+	   <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+      <link rel="stylesheet" type="text/css" href="css/index.css" />
+      <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+      <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+      <title>GreyBox Admin</title>
+      <style>
+	  body {
+	background-image:url(img/s71.png);
+	background-size: 100% 100%;
+    width: 100%;
+    height: 100%;
+    height: auto !important;
+    min-height:100%;
+	
+	height: 100%;
+}	
+		 .row {
+		margin-right: 0px;
+		margin-left: 0px;
+		}
+         .container-fluid {
+         padding-right: 0px;
+         padding-left: 0px;
+         }
+         .col-lg-1,
+         .col-lg-10,
+         .col-lg-11,
+         .col-lg-12,
+         .col-lg-2,
+         .col-lg-3,
+         .col-lg-4,
+         .col-lg-5,
+         .col-lg-6,
+         .col-lg-7,
+         .col-lg-8,
+         .col-lg-9,
+         .col-md-1,
+         .col-md-10,
+         .col-md-11,
+         .col-md-12,
+         .col-md-2,
+         .col-md-3,
+         .col-md-4,
+         .col-md-5,
+         .col-md-6,
+         .col-md-7,
+         .col-md-8,
+         .col-md-9,
+         .col-sm-1,
+         .col-sm-10,
+         .col-sm-11,
+         .col-sm-12,
+         .col-sm-2,
+         .col-sm-3,
+         .col-sm-4,
+         .col-sm-5,
+         .col-sm-6,
+         .col-sm-7,
+         .col-sm-8,
+         .col-sm-9,
+         .col-xs-1,
+         .col-xs-10,
+         .col-xs-11,
+         .col-xs-12,
+         .col-xs-2,
+         .col-xs-3,
+         .col-xs-4,
+         .col-xs-5,
+         .col-xs-6,
+         .col-xs-7,
+         .col-xs-8,
+         .col-xs-9 {
+         position: relative;
+         min-height: 1px;
+         padding-right: 0px;
+         padding-left: 0px;
+         }
+		 .container-fluid>.navbar-collapse,
+.container-fluid>.navbar-header,
+.container>.navbar-collapse,
+.container>.navbar-header {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+.navbar-custom{
+	background-color: #1E8BC3;
+}
+a{
+	color:white
+}
+      </style>
+   </head>
+   <body >
+      <form>
+        <nav class="navbar navbar-custom">
+  <div class="container-fluid">
+   <div class="navbar-header">
+      <a class="navbar-brand" style="width:100%;text-align:center;" href="dashboard.html"><i style="position: absolute;left:5px;;" class="fa fa-home" aria-hidden="true"></i> <span>Attendance</span></a>  
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
+        <li class="dropdown">
+		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
+        </li>
+        <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
+      </ul>
+      
+    </div>
+  </div>
+</nav>
+         <div class="content" >
+         <div class="container-fluid">
+         <center>
+            <div class="col-md-12">
+            <div class="card"><br>
+               <div class="content " style="background-color:#A3E4D7">
+                  <div class='row'>
+                     <div class="col-md-12 col-xs-12">
+                        <div class='content'></div>
+                        <br>
+                        <div class="header">
+                           <p class="title" id='sname' style="font-size:18px;" >Welcome </p>
+                        </div>
+                        
+                        <div class="content">
+                           <div class='row'>
+                              <div class="col-md-3 col-xs-6 text-muted">
+                                 <label>Father's Name:</label>
+                                 <p class="small" id="fname"></p>
+                              </div>
+                              <div class="col-md-3 col-xs-6 text-muted">
+                                 <label>Admission No.</label>
+                                 <p class="small" id='admn' ></p>
+                              </div>
+                           </div>
+                        
+							<div class='row' style="background-color:#A3E4D7">
+								<div class="col-md-12 col-xs-12">
+									<label><small><b>Attendence</b></small></label>
+								</div>
+								<div class="col-md-12 col-xs-12" style="background-color:#faffbd">								
+									<label><small>This Session</small></label>
+								</div>
+								<div class="col-md-12 col-xs-12" style="background-color:#faffbd">
+									
+									<p class='title' align='center' id="attend" style="font-size:75px"></p>
+									
+							    </div>
+                              <div class="col-md-12 col-xs-12" style="background-color:#faffbd" >
+								<label id="leave"></label>
+							  </div>
+                           </div>
+						   <div >
+                           
+                        </div>
+                           <small><a href='#' onclick='document.getElementById("details").style.display = "block";'>Details</a></small>
+						   <br>
+						   <div id='details' style="display:none;" class="text-muted"></div>
+                        </div>
+                        <br><br><br>
+						</div>
+                        
+                        <br><br><br>
+                     </div>
+                  </div>
+				</div>
+         </div>	
+         </div>
+		 </center>
+		 </div>
+		 </div>
+      </form>
+   </body>
+   <script type="text/javascript" src="cordova.js"></script>
+   <script type="text/javascript" src="js/index.js"></script>
+   <script type="text/javascript" src="js/dataTbl.js"></script>
+   <script type="text/javascript" src="js/msg.js"></script>
+   
+   <script>
+Date.prototype.toDateInputValue = (function() {
+    var local = new Date(this);
+    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+    return local.toJSON().slice(0,10);
+});
+if(localStorage.getItem("attendance") !=null)
+	document.getElementById('attend').innerHTML = localStorage.getItem("attendance") + "%";
+</script>
+   <script>
+      function fillAttendance(q)
+      {
+      	var sql = "sid=" + q;
+      	var req = new XMLHttpRequest();
+      	req.onreadystatechange = function() {
+      		if (req.readyState == 4 && req.status == 200) {
+      			try {
+      				
+      				var data=JSON.parse(req.responseText);
+      				var per = Math.floor((data['max']-data['tot'])*100/data['max']);
+					localStorage.setItem("attendance",per);
+      				document.getElementById('attend').innerHTML = per + "%";//data['tot'] + "/" + data['max'];
+      				document.getElementById('leave').innerHTML = "L=" + data['leaves'] + ",A=" + data['absent'] + ", Total=" + data['max']; 
+					
+					custom(data['details']);
+      				
+      			} catch (e) {
+      				console.log("Exception::-"+e.toString());
+      			}
+      		}
+      	};
+      
+      	req.open("GET", base_url + "/getLeaves.php?" +sql, true);
+      	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      	
+      	req.send();
+      }
+   </script>
+   <script>
+      var id =localStorage.getItem("sid");
+      
+      fillAttendance(id);
+     
+   </script>
+   <script>
+      function custom(data){
+		document.getElementById('details').innerHTML = "";
+			for (var i = 0; i < data.length; i++) {
+				document.getElementById('details').innerHTML += formatDate(data[i]['day']) + " - " + data[i]['status'] + "<br>";
+			}
+	  }
+      function fillStudentDetails()
+      {
+      		document.getElementById('admn').innerHTML = localStorage.getItem("sid");
+      		document.getElementById('sname').innerHTML += " " ;//+ localStorage.getItem("sname");
+      		document.getElementById('fname').innerHTML = localStorage.getItem("fathername");
+      		
+      	
+      }
+	  fillStudentDetails();
+   </script>
+</html>

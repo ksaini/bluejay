@@ -2,7 +2,7 @@ var dataArray=new Array();
 var schoolname= "JSS Public School";
 var address ="Sector 71, Delhi";
 var scn1 = "";
-var base_url = "http://greyboxerp.com/bot";
+var base_url = "http://greyboxerp.com/studentapp/";
 
 
 function schoolDetails(data){
@@ -605,7 +605,7 @@ function saveTblData(tbl,c,t,f){
 	
 	var base_url = document.URL.substr(0,document.URL.lastIndexOf('/'));
 	
-	req.open("POST", base_url + "/userLogin.php", true);
+	req.open("POST", base_url + "/verifyUser.php", true);
 	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	req.send(sql);
 	

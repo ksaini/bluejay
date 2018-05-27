@@ -1,4 +1,4 @@
-var base_url = "http://greyboxerp.com/bot/";
+var base_url = "http://greyboxerp.com/studentapp/";
 
 function getSID(){
 	var sid = localStorage.getItem("sid");
@@ -10,7 +10,8 @@ function getSID(){
 
 function getMessageID(){
 	var sid = localStorage.getItem("mid");
-	if(sid != null)
+	
+	if(sid >0)
 		return sid;
 	else
 		return 0;
@@ -31,6 +32,8 @@ function populateLocalMsg(mid){
 }
 
 function getNewMsg(sid,mid){
+	chat.innerHTML = localStorage.getItem("chat");
+	setTimeout(function(){window.scrollTo(0,document.body.scrollHeight+300);}, 200);
 	
 	var sql = "sid=" + sid + "&mid=" + mid;
 	var req = new XMLHttpRequest();
@@ -68,25 +71,49 @@ function populateMsg(data){
 				// Individual repl to student
 				msgstr += getLeftMsg(data[i]['msg'],"",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);				
 			}	
-			else if(data[i]['cid']==localStorage.getItem("cid") ){
+			else { //if(data[i]['cid']==localStorage.getItem("cid") )
 				// Announcements for a given class
 				msgstr += getLeftMsg(data[i]['msg'],"<i class='fa fa-volume-up'></i>",data[i]['scopeid'],data[i]['mid'],data[i]['ts']);
 			}
 			
-			tmp = data[i]['mid'];           
+			tmp = data[i]['mid'];    
+            localStorage.setItem("mid", tmp);			
 		}
 		
-		localStorage.setItem(mid, tmp);
-		chat.innerHTML = msgstr;
+		
+		localStorage.setItem("chat", manageStoredMsg(100,20) + msgstr);
+		chat.innerHTML += msgstr; //localStorage.getItem("chat");
 		setTimeout(function(){window.scrollTo(0,document.body.scrollHeight+300);}, 200);
 		
+}
+
+function manageStoredMsg(limit,last){
+	//Keep check on size of storeg messages locally
+	//If messages excedes limit(100) remove last(20) messages
+	// Else return original stored msg
+	
+	var el = document.createElement( 'body' );
+	el.innerHTML = localStorage.getItem("chat");
+
+	var li = el.getElementsByTagName( 'li' );
+	
+	if(li.length > limit){
+		var t = "";
+		while (last--)	{
+			t +=li[last].id;
+			el.removeChild(li[last]);
+		}
+		
+	}
+	return el.innerHTML;
 }
 
 function getLeftMsg(m,id,sid,mid,ts){
 	var icon = "R";
 	
 	msg = "<li id='m_"+mid+"' class='left clearfix'><span class='chat-img pull-left'>";
-	msg += "<img src='http://placehold.it/45/55C1E7/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	msg += "<img src='img/r.png' alt='User Avatar' class='img-circle' /></span>";
+	//msg += "<div style='border-radius: 50%;width:40px;height:40px;background: #55C1E7;' >"+icon+"</div></span>";
     msg += "<div class='chat-body clearfix'><div class='header'>";
 	msg += "<strong class='primary-font'>"+ id +"</strong> <small style='font-size:8px;' class='pull-right text-muted'>";
 	msg += "<i class='fa fa-clock-o'></i></span> "+formatDateY(ts)+" </small></div>";
@@ -99,7 +126,8 @@ function getRightMsg(m,id,sid,mid,ts){
 	var icon = "ME";
 	
 	msg = "<li id='m_"+mid+"' class='right clearfix' style='background-color:#e6fff9;'><span class='chat-img pull-right'>";
-	msg += "<img src='http://placehold.it/45/ff9933/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	//msg += "<img src='http://placehold.it/45/ff9933/fff&text="+icon+"' alt='User Avatar' class='img-circle' /></span>";
+	msg += "<img src='img/me.png' alt='User Avatar' class='img-circle' /></span>";
     msg += "<div class='chat-body clearfix' ><div class=' header'>";
 	msg += "<strong class='pull-right primary-font'>"+ id +"</strong> </div>";
 	msg += "<p style='text-align:right;padding-top:5px;'>" + m ;
@@ -111,16 +139,15 @@ function getRightMsg(m,id,sid,mid,ts){
 }
 function sendmsg(sid){
 	var msg = document.getElementById("btn-input").value;
-	var sql = "sid=" + sid + "&msg=" + msg;
+	document.getElementById("btn-input").value=""
+	
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			try {
-				//alert(req.responseText);
-				var chat = document.getElementById("chat");
-				chat.innerHTML += getRightMsg(msg,"","","");
-				document.getElementById("btn-input").value="";
 				window.scrollTo(0,document.body.scrollHeight+300);
+				//if able to send message clear the tmpmsg
+				localStorage.setItem("tmpmsg","");
 								
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
@@ -128,20 +155,43 @@ function sendmsg(sid){
 		}
 	};
 	
-	req.open("GET", base_url + "/setMsg.php?" + sql, true);
-	req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	req.send();
+	if( (msg.trim().length > 0) || localStorage.getItem("tmpmsg").length > 0){
+		//store messages in localstorage so that if client is not connected
+		// we can post message later.
+		var sql = "";
+		var tmpmsg = localStorage.getItem("tmpmsg");
+		localStorage.setItem("tmpmsg",tmpmsg + "<br>" + msg);
+		
+		var chat = document.getElementById("chat");
+		
+		if(tmpmsg.length > 0){
+			sql = "sid=" + sid + "&msg=" + tmpmsg + "<br>" + msg;
+			chat.innerHTML += getRightMsg(tmpmsg + "<br>" + msg,"","","");
+		}
+		else{
+			sql = "sid=" + sid + "&msg=" + msg;
+			chat.innerHTML += getRightMsg(msg,"","","");
+		}
+		window.scrollTo(0,document.body.scrollHeight+300);
+	
+		req.open("GET", base_url + "/setMsg.php?" + sql, true);
+		req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		req.send();
+	}
 }
 
 function getHWList(){
-
+	
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function() {
-		if (req.readyState == 4 && req.status == 200) {
-			try {
+		if (req.readyState == 4){
+			if(req.status == 200){
+			 try {
 				var hwlist = document.getElementById("notice");
 				hwlist.innerHTML = "";
 				var data=JSON.parse(req.responseText);
+				if(data.length<1)
+					hwlist.innerHTML = "<br>Hurray!! No Homework";
 				var txt = "<ul class='chat' id='chat'>";
 				for(var i=0; i < data.length; i++){
 					var d = data[i]['hwdate'];
@@ -150,9 +200,10 @@ function getHWList(){
 				}
 					
 				hwlist.innerHTML += txt + "</ul>";
-			} catch (e) {
+			 } catch (e) {
 				console.log("Exception::-"+e.toString());
-			}
+			 }
+			}else {document.getElementById("notice").innerHTML = "<ul class='chat' id='chat'><li class='clearfix text-muted'><label>No Internet Connection!</label></li></ul>"}
 		}
 	};
 	
@@ -168,7 +219,7 @@ function showHW(dt){
 			try {
 				var hw = document.getElementById("notice");
 				localStorage.setItem("hwlist",hw.innerHTML);  
-				hw.innerHTML = "<div id='back'><i class='fa fa-arrow-circle-left' onclick='backHW();'></i> &nbsp; Back</div><br>";
+				hw.innerHTML = "<div id='back'><i class='fa fa-2x fa-arrow-circle-left' onclick='backHW();'></i> &nbsp; Back</div><br>";
 				hw.classList.add('notesArea');
 				var data=JSON.parse(req.responseText);
 	
@@ -179,7 +230,7 @@ function showHW(dt){
 						var imgs = data[i]['imgs'].split(',');
 						var im = "";
 						for (var x=0; x< imgs.length; x++){
-							im +="<img src='"+imgs[x]+"' class='img-thumbnail'  alt='HW Image'  />";
+							im +="<br><img src='"+imgs[x]+"' class='img-thumbnail'  alt='HW Image'  />";
 						}
 						hw.innerHTML += im;
 					}
@@ -213,13 +264,17 @@ function formatDate(dt){
 	} catch(e){return dt;}
 }
 function formatDateY(dt){
+	if(dt == null) return "Sending..";
 	try{
 		var dateObj = new Date(dt);
 		var month = dateObj.getUTCMonth() + 1; //months from 1-12
 		var day = dateObj.getUTCDate();
-		
-
-		newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() ;
+		var m = dateObj.getMinutes();
+		if(m < 10)
+			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":0" +dateObj.getMinutes() + " " ;
+		else
+			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() + " " ;
+				
 		return newdate;
 	} catch(e){return dt;}
 }
