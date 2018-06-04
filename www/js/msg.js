@@ -276,8 +276,8 @@ function download(URL, Folder_Name, File_Name) {
     directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
-
-    fp = fp + "/" + Folder_Name + "/" + File_Name + "." + ext; // fullpath and name of the file which we want to give
+	fp = fileSystem.root.toNativeURL();
+    fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
     // download function call
     filetransfer(download_link, fp);
  }
@@ -301,14 +301,15 @@ function filetransfer(download_link, fp) {
 var fileTransfer = new FileTransfer();
 // File download function with URL and local path
 fileTransfer.download(download_link, fp,
+
                     function (entry) {
                         alert("download complete: " + entry.fullPath);
                     },
                  function (error) {
                      //Download abort errors or download failed errors
-                     alert("download error source " + error.source);
+                     alert(download_link);alert(fp);
                      //alert("download error target " + error.target);
-                     //alert("upload error code" + error.code);
+                     alert("upload error code" + error.code);
                  }
             );
 }
