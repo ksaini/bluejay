@@ -232,10 +232,11 @@ function showHW(dt){
 						for (var x=0; x< imgs.length; x++){
 							var uri = imgs[x];
 							im +="<br><img src='"+imgs[x]+"' class='img-thumbnail' style='max-height: 350px;margin-left:15px;'  alt='HW Image'  />";
-							im += "<div class='desc' onclick=\"downloadImg('"+uri+"',"+i+")\"> &nbsp; ";
-							im += '<div class="progress " id="progbar'+i+'" style="display:none"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:70%"> 70%</div></div>';
-							im += "<i class='fa fa-download' aria-hidden='true' id='dld"+i+"'></i></div><br>";
+							im += "<div class='desc' id='desc"+i+"' > &nbsp; ";
+							im += '<div class="progress " id="progbar'+i+'" style="display:none;background-color:#4CAF50;"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ></div></div>';
+							im += "<i class='fa fa-download' aria-hidden='true' id='dld"+i+"' onclick=\"downloadImg('"+uri+"',"+i+")\"></i></div><br>";
 						}
+    
 						hw.innerHTML += im;
 					}
 				}	
@@ -260,10 +261,10 @@ function downloadImg(uri,i){
 	
 	document.getElementById("progbar"+i).style.display = "block";
 	document.getElementById("dld"+i).style.display = "none";
-	download(uri,"gb",uri.split('/').pop());
+	download(uri,"gb",uri.split('/').pop(),i);
 }
 
-function download(URL, Folder_Name, File_Name) {
+function download(URL, Folder_Name, File_Name,i) {
 //step to request a file system 
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
 
@@ -279,7 +280,7 @@ function download(URL, Folder_Name, File_Name) {
 	fp = fileSystem.root.toNativeURL();
     fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
     // download function call
-    filetransfer(download_link, fp);
+    filetransfer(download_link, fp,i);
  }
 
  function onDirectorySuccess(parent) {
@@ -297,19 +298,34 @@ function download(URL, Folder_Name, File_Name) {
  }
 }
 
-function filetransfer(download_link, fp) {
+function filetransfer(download_link, fp,i) {
 var fileTransfer = new FileTransfer();
+var statusDom = document.getElementById("progbar"+i);
+fileTransfer.onprogress = function(progressEvent) {
+		if (progressEvent.lengthComputable) {
+			var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
+			statusDom.innerHTML = perc + "% loaded...";
+			statusDom.style.width = perc;
+		} else {
+			if(statusDom.innerHTML == "") {
+				statusDom.innerHTML = "Loading";
+			} else {
+				statusDom.innerHTML += ".";
+			}
+		}
+	};
 // File download function with URL and local path
 fileTransfer.download(download_link, fp,
 
                     function (entry) {
-                        alert("download complete: " + entry.fullPath);
+                        document.getElementById("desc"+i).innerHTML = "Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
+						document.getElementById("desc"+i).style.height = "20px";
                     },
                  function (error) {
-                     //Download abort errors or download failed errors
-                     alert(download_link);alert(fp);
-                     //alert("download error target " + error.target);
-                     alert("upload error code" + error.code);
+                    // alert(download_link);alert(fp);alert("upload error code" + error.code);
+					document.getElementById("desc"+i).innerHTML = "Unable to download.";
+					document.getElementById("desc"+i).style.color = "red";
+					document.getElementById("desc"+i).style.height = "20px";
                  }
             );
 }
