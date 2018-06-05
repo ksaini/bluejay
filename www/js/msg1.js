@@ -266,9 +266,8 @@ function downloadImg(uri,i){
 
 function download(URL, Folder_Name, File_Name,i) {
 //step to request a file system 
-	window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
-	//window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, fileSystemSuccess, fileSystemFail);
+	//window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory  + "/Pictures", fileSystemSuccess, fileSystemFail);
 
  function fileSystemSuccess(fileSystem) {
     var download_link = encodeURI(URL);
@@ -283,10 +282,10 @@ function download(URL, Folder_Name, File_Name,i) {
 	fp = fileSystem.root.toURL();
 	alert(fp);
 	fp = "file:///storage/emulated/0/Pictures";
-	fp = fileSystem.root.toURL();
+	fp = cordova.file.dataDirectory;
 	alert(fp);
-    
-	
+
+	alert(listDir(fileSystem.root));
     fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
     // download function call
     filetransfer(download_link, fp,i);
@@ -312,6 +311,8 @@ function filetransfer(download_link, fp,i) {
 	var fileTransfer = new FileTransfer();
 	var statusDom = document.getElementById("progbar"+i);
 	
+	var fp = fileSystem.toURL() + "ex.jpg";alert(fp);
+	
 	fileTransfer.onprogress = function(progressEvent) {
 		if (progressEvent.lengthComputable) {
 			var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
@@ -332,7 +333,7 @@ function filetransfer(download_link, fp,i) {
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						alert(entry.fullPath);
+						//alert(fp);
                     },
                  function (error) {
                     // alert(download_link);alert(fp);alert("upload error code" + error.code);

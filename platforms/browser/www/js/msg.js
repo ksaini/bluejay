@@ -266,7 +266,9 @@ function downloadImg(uri,i){
 
 function download(URL, Folder_Name, File_Name,i) {
 //step to request a file system 
+	window.requestFileSystem  = window.requestFileSystem || window.webkitRequestFileSystem;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, fileSystemSuccess, fileSystemFail);
+	//window.resolveLocalFileSystemURL(cordova.file.externalRootDirectory, fileSystemSuccess, fileSystemFail);
 
  function fileSystemSuccess(fileSystem) {
     var download_link = encodeURI(URL);
@@ -277,7 +279,14 @@ function download(URL, Folder_Name, File_Name,i) {
     directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
+	alert(fp);
 	fp = fileSystem.root.toURL();
+	alert(fp);
+	fp = "file:///storage/emulated/0/Pictures";
+	fp = fileSystem.root.toURL();
+	alert(fp);
+    
+	
     fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
     // download function call
     filetransfer(download_link, fp,i);
@@ -299,9 +308,11 @@ function download(URL, Folder_Name, File_Name,i) {
 }
 
 function filetransfer(download_link, fp,i) {
-var fileTransfer = new FileTransfer();
-var statusDom = document.getElementById("progbar"+i);
-fileTransfer.onprogress = function(progressEvent) {
+	  	
+	var fileTransfer = new FileTransfer();
+	var statusDom = document.getElementById("progbar"+i);
+	
+	fileTransfer.onprogress = function(progressEvent) {
 		if (progressEvent.lengthComputable) {
 			var perc = Math.floor(progressEvent.loaded / progressEvent.total * 100);
 			statusDom.innerHTML = perc + "% loaded...";
@@ -314,13 +325,14 @@ fileTransfer.onprogress = function(progressEvent) {
 			}
 		}
 	};
-// File download function with URL and local path
-fileTransfer.download(download_link, fp,
+	// File download function with URL and local path
+	
+	fileTransfer.download(download_link, fp,
 
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						//alert(fp);
+						alert(entry.fullPath);
                     },
                  function (error) {
                     // alert(download_link);alert(fp);alert("upload error code" + error.code);
@@ -328,15 +340,15 @@ fileTransfer.download(download_link, fp,
 					document.getElementById("desc"+i).style.color = "red";
 					document.getElementById("desc"+i).style.height = "20px";
                  }
-            );
+            );			
 }
 
 function formatDate(dt){
 	try{
 		var dateObj = new Date(dt);
-		var month = dateObj.getUTCMonth() + 1; //months from 1-12
-		var day = dateObj.getUTCDate();
-		var year = dateObj.getUTCFullYear();
+		var month = dateObj.getMonth() + 1; //months from 1-12
+		var day = dateObj.getDate();
+		var year = dateObj.getFullYear();
 
 		newdate =  getM(month) + " " + day + ", " + year;
 		return newdate;
@@ -346,8 +358,8 @@ function formatDateY(dt){
 	if(dt == null) return "Sending..";
 	try{
 		var dateObj = new Date(dt);
-		var month = dateObj.getUTCMonth() + 1; //months from 1-12
-		var day = dateObj.getUTCDate();
+		var month = dateObj.getMonth() + 1; //months from 1-12
+		var day = dateObj.getDate();
 		var m = dateObj.getMinutes();
 		if(m < 10)
 			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":0" +dateObj.getMinutes() + " " ;
