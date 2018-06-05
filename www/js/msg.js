@@ -279,12 +279,12 @@ function download(URL, Folder_Name, File_Name,i) {
     directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
-	alert(fp);
+	//alert(fp);
 	fp = fileSystem.root.toURL();
-	alert(fp);
+	//alert(fp);
 	fp = "file:///storage/emulated/0/Pictures";
 	fp = fileSystem.root.toURL();
-	alert(fp);
+	//alert(fp);
     
 	
     fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
@@ -332,7 +332,8 @@ function filetransfer(download_link, fp,i) {
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						alert(entry.fullPath);
+						refreshMedia.refresh(fp);
+						//alert(entry.fullPath);
                     },
                  function (error) {
                     // alert(download_link);alert(fp);alert("upload error code" + error.code);
