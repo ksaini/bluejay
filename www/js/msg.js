@@ -332,8 +332,9 @@ function filetransfer(download_link, fp,i) {
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						refreshMedia.refresh(fp);
-						//alert(entry.fullPath);
+						refreshMedia.refresh(entry.fullPath);
+						moveFile(fp);
+											
                     },
                  function (error) {
                     // alert(download_link);alert(fp);alert("upload error code" + error.code);
@@ -343,6 +344,7 @@ function filetransfer(download_link, fp,i) {
                  }
             );			
 }
+
 
 function formatDate(dt){
 	try{
@@ -398,3 +400,24 @@ function getM(m){
     return "Dec";     
 
 }
+
+function moveFile(fileUri) {
+    window.resolveLocalFileSystemURL(
+          fileUri,
+          function(fileEntry){
+                newFileUri  = cordova.file.dataDirectory + "images/";
+                oldFileUri  = fileUri;
+                fileExt     = "." + oldFileUri.split('.').pop();
+
+                newFileName = "testtest" + fileExt;
+                window.resolveLocalFileSystemURL(newFileUri,
+                        function(dirEntry) {
+                            // move the file to a new directory and rename it
+                            fileEntry.moveTo(dirEntry, newFileName, successCallback, errorCallback);
+                        },
+                        errorCallback);
+          },
+          errorCallback);
+}
+function successCallback(entry){alert("success");}
+function errorCallback(entry){alert("success");}

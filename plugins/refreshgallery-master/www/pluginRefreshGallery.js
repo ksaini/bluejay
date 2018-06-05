@@ -9,11 +9,11 @@ RefreshMedia.prototype.refresh = function(url) {
 };
 
 var success = function(success){
-	//alert("Success");
+	alert("Success");
 },
 
 error = function(error){
-	//alert("Error");
+	alert("Error");
 };
 
 window.refreshMedia = new RefreshMedia();
