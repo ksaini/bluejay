@@ -162,7 +162,15 @@
     "com.guinatal.refreshgallery": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-refresh-gallery@1.0.9"
+            "id": "cordova-plugin-refresh-gallery@~1.0.9"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-gallery-refresh": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-gallery-refresh@1.0.61"
         },
         "is_top_level": true,
         "variables": {}

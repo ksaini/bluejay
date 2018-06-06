@@ -610,6 +610,14 @@ module.exports = [
         "clobbers": [
             "window.refreshMedia"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-gallery-refresh/www/GalleryRefresh.js",
+        "id": "cordova-plugin-gallery-refresh.GalleryRefresh",
+        "pluginId": "cordova-plugin-gallery-refresh",
+        "clobbers": [
+            "galleryRefresh"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -635,7 +643,8 @@ module.exports.metadata =
     "cordova-plugin-statusbar": "2.1.3",
     "cordova-plugin-vibration": "2.1.6",
     "cordova-plugin-whitelist": "1.2.2",
-    "com.guinatal.refreshgallery": "1.0.9"
+    "com.guinatal.refreshgallery": "1.0.9",
+    "cordova-plugin-gallery-refresh": "1.0.55"
 }
 // BOTTOM OF METADATA
 });

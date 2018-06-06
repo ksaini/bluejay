@@ -279,16 +279,13 @@ function download(URL, Folder_Name, File_Name,i) {
     directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
-	//alert(fp);
-	fp = fileSystem.root.toURL();
-	//alert(fp);
-	fp = "file:///storage/emulated/0/Pictures";
-	fp = fileSystem.root.toURL();
-	//alert(fp);
-    
 	
+	//fp = "file:///storage/emulated/0/Pictures";
+	fp = fileSystem.root.toURL();
+	//alert(fp);
+	    
     fp = fp + "/" + Folder_Name + "/" + File_Name; // fullpath and name of the file which we want to give
-    // download function call
+    // download function call	
     filetransfer(download_link, fp,i);
  }
 
@@ -332,12 +329,10 @@ function filetransfer(download_link, fp,i) {
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						refreshMedia.refresh(entry.fullPath);
-						moveFile(fp);
-											
+						refreshMedia.refresh(fp);				
                     },
                  function (error) {
-                    // alert(download_link);alert(fp);alert("upload error code" + error.code);
+                     //alert("upload error code" + error.code);
 					document.getElementById("desc"+i).innerHTML = "Unable to download.";
 					document.getElementById("desc"+i).style.color = "red";
 					document.getElementById("desc"+i).style.height = "20px";
@@ -401,23 +396,24 @@ function getM(m){
 
 }
 
-function moveFile(fileUri) {
-    window.resolveLocalFileSystemURL(
-          fileUri,
-          function(fileEntry){
-                newFileUri  = cordova.file.dataDirectory + "images/";
-                oldFileUri  = fileUri;
-                fileExt     = "." + oldFileUri.split('.').pop();
 
-                newFileName = "testtest" + fileExt;
-                window.resolveLocalFileSystemURL(newFileUri,
-                        function(dirEntry) {
-                            // move the file to a new directory and rename it
-                            fileEntry.moveTo(dirEntry, newFileName, successCallback, errorCallback);
-                        },
-                        errorCallback);
-          },
-          errorCallback);
-}
-function successCallback(entry){alert("success");}
-function errorCallback(entry){alert("success");}
+function successCallback(entry){alert("success"); }
+function errorCallback(e){alert("error");}
+function gotFile(file){
+        readDataUrl(file);  
+    }
+
+    function readDataUrl(file) {
+           var reader = new FileReader();
+           reader.onloadend = function(evt) {
+           console.log("Read as data URL");
+           console.log(evt.target.result);
+           document.getElementById("test").style.display='block'; 
+           document.getElementById("test").src = evt.target.result;   
+        }; 
+        reader.readAsDataURL(file);
+    }
+
+    function fail(evt) {
+        console.log(evt.target.error.code);
+    }
