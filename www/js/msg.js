@@ -231,10 +231,14 @@ function showHW(dt){
 						var im = "";
 						for (var x=0; x< imgs.length; x++){
 							var uri = imgs[x];
-							im +="<br><img src='"+imgs[x]+"' class='img-thumbnail' style='max-height: 350px;margin-left:15px;'  alt='HW Image'  />";
+							im +="<br><img src='"+imgs[x]+"' class='img-thumbnail' style='max-height: 350px;margin-left:15px;'  alt='HW Image' onclick=\"getModal('"+imgs[x]+"')\"  />";
 							im += "<div class='desc' id='desc"+i+"' > &nbsp; ";
-							im += '<div class="progress " id="progbar'+i+'" style="display:none;background-color:#4CAF50;"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ></div></div>';
-							im += "<i class='fa fa-download' aria-hidden='true' id='dld"+i+"' onclick=\"downloadImg('"+uri+"',"+i+")\"></i></div><br>";
+							//im += '<div class="progress " id="progbar'+i+'" style="display:none;background-color:#4CAF50;"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" ></div></div>';
+							//im += "<i class='fa fa-download' aria-hidden='true' id='dld"+i+"' onclick=\"downloadImg('"+uri+"',"+i+")\"></i>";
+							im += '<div id="myModal" class="modal" onclick="getModless()"><span class="close" onclick="getModless()">&times;</span>';
+							im += '<img class="modal-content" id="img01" onclick="getModless()"><div id="caption"></div></div>';
+							
+							im += "</div><br>";
 						}
     
 						hw.innerHTML += im;
@@ -279,7 +283,6 @@ function download(URL, Folder_Name, File_Name,i) {
     directoryEntry.getDirectory(Folder_Name, { create: true, exclusive: false }, onDirectorySuccess, onDirectoryFail); // creating folder in sdcard
     var rootdir = fileSystem.root;
     var fp = rootdir.fullPath; // Returns Fulpath of local directory
-	
 	//fp = "file:///storage/emulated/0/Pictures";
 	fp = fileSystem.root.toURL();
 	//alert(fp);
@@ -329,7 +332,7 @@ function filetransfer(download_link, fp,i) {
                     function (entry) {
                         document.getElementById("desc"+i).innerHTML = fp +" Done &nbsp;" + '<i class="fa fa-check-circle" style="font-size:16px;color:#4CAF50;"></i>';
 						document.getElementById("desc"+i).style.height = "20px";
-						refreshMedia.refresh(fp);				
+						//refreshMedia.refresh(fp);				
                     },
                  function (error) {
                      //alert("upload error code" + error.code);
@@ -395,25 +398,3 @@ function getM(m){
     return "Dec";     
 
 }
-
-
-function successCallback(entry){alert("success"); }
-function errorCallback(e){alert("error");}
-function gotFile(file){
-        readDataUrl(file);  
-    }
-
-    function readDataUrl(file) {
-           var reader = new FileReader();
-           reader.onloadend = function(evt) {
-           console.log("Read as data URL");
-           console.log(evt.target.result);
-           document.getElementById("test").style.display='block'; 
-           document.getElementById("test").src = evt.target.result;   
-        }; 
-        reader.readAsDataURL(file);
-    }
-
-    function fail(evt) {
-        console.log(evt.target.error.code);
-    }
