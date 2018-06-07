@@ -113,7 +113,7 @@ a{
       <ul class="nav navbar-nav">
         <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
         <li class="dropdown">
-		  <a href="index.html" onclick="localStorage['sid']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
+		  <a href="index.html" onclick="localStorage['sid']='';localStorage['sname']='';localStorage['fname']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
         </li>
         <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
       </ul>
@@ -132,7 +132,7 @@ a{
                         <div class='content'></div>
                         <br>
                         <div class="header">
-                           <p class="title" id='sname' style="font-size:18px;" >Welcome </p>
+                           <p class="title" id='sname' style="font-size:18px;" ></p>
                         </div>
                         
                         <div class="content">
@@ -149,7 +149,7 @@ a{
                         
 							<div class='row' style="background-color:#A3E4D7">
 								<div class="col-md-12 col-xs-12">
-									<label><small><b>Attendence</b></small></label>
+									<label><small><b>Attendance</b></small></label>
 								</div>
 								<div class="col-md-12 col-xs-12" style="background-color:#faffbd">								
 									<label><small>This Session</small></label>
@@ -242,9 +242,9 @@ if(localStorage.getItem("attendance") !=null)
 	  }
       function fillStudentDetails()
       {
-      		document.getElementById('admn').innerHTML = localStorage.getItem("sid");
-      		document.getElementById('sname').innerHTML += " " ;//+ localStorage.getItem("sname");
-      		document.getElementById('fname').innerHTML = localStorage.getItem("fathername");
+      		document.getElementById('admn').innerHTML = localStorage.getItem("sid").replace("-","P");
+      		document.getElementById('sname').innerHTML += localStorage.getItem("sname") ;//+ localStorage.getItem("sname");
+      		document.getElementById('fname').innerHTML = localStorage.getItem("fname");
       		
       	
       }

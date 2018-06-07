@@ -78,7 +78,7 @@ body {
 	color:white;
 }
 .navbar-custom{
-	background-color: #34495E;//1E8BC3;
+	background-color: #34495E;
 }
 a{
 	color:white
@@ -89,7 +89,16 @@ a{
 a {
   text-decoration: none !important; 
 }
-
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: transparent;
+    color: #444;
+    text-align: center;
+	text-transform:none;
+}
 
 </style>
     <title>GreyBox School</title>
@@ -111,7 +120,7 @@ a {
       <ul class="nav navbar-nav">
         <li class="active"><a href="dashboard.html">&nbsp;Home</a></li>
         <li class="dropdown">
-		  <a href="index.html" onclick="localStorage['sid']='';localStorage['mid']='';localStorage['chat']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
+		  <a href="index.html" onclick="localStorage['sid']='';localStorage['mid']='';localStorage['chat']='';localStorage['sname']='';localStorage['fname']='';document.location='index.html'">&nbsp;&nbsp;Logout</a>
         </li>
         <!----<li><a href="#">&nbsp;&nbsp;View Agents </a></li>---->
       </ul>
@@ -167,7 +176,9 @@ a {
 			</div>	
 		</div>
 	</div>
-
+	<div class="footer">
+  <p>powered by <b style="color:#E87E04;">GreyBox Software</b></p>
+</div>
 </div>
 </form>	
 </body>

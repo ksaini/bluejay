@@ -103,8 +103,7 @@ app.initialize();
 function verify(){
      
 	var key = "demo";	
-	//localStorage["sid"] = 1000129;
-	
+		
 	if(localStorage.getItem("sid")!=null && localStorage.getItem("sid").length > 0)
 		document.location='dashboard.html';
 	else{
@@ -121,9 +120,8 @@ function verifyUser(u,p,k){
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			try {
-				//alert(req.responseText);
-				//var dataArray=JSON.parse(req.responseText);
-				custom(req.responseText);
+				var dataArray=JSON.parse(req.responseText);
+				setdata(dataArray);
 								
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
@@ -136,10 +134,12 @@ function verifyUser(u,p,k){
 	req.send();
 }
 
-function custom(data){
-	if(data!=null){
-		
-			localStorage["sid"] = data;
+function setdata(data){
+	if(data!=null ){
+			
+			localStorage["sid"] = data["admn"];
+			localStorage["sname"] = data["fname"];
+			localStorage["fname"] = data["fathername"];
 			document.location='dashboard.html';
 		}
 	else

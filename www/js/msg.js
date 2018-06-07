@@ -359,13 +359,16 @@ function formatDateY(dt){
 	if(dt == null) return "Sending..";
 	try{
 		var dateObj = new Date(dt);
-		var month = dateObj.getMonth() + 1; //months from 1-12
-		var day = dateObj.getDate();
-		var m = dateObj.getMinutes();
+		var currentOffset = dateObj.getTimezoneOffset();
+		var ISTOffset = 1080; 
+		var ISTTime  = new Date(dateObj.getTime() + (ISTOffset + currentOffset)*60000);
+		var month = ISTTime .getMonth() + 1; //months from 1-12
+		var day = ISTTime .getDate();
+		var m = ISTTime .getMinutes();
 		if(m < 10)
-			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":0" +dateObj.getMinutes() + " " ;
+			newdate =  getM(month) + " " + day + " " + ISTTime .getHours() + ":0" +ISTTime .getMinutes() + " " ;
 		else
-			newdate =  getM(month) + " " + day + " " + dateObj.getHours() + ":" +dateObj.getMinutes() + " " ;
+			newdate =  getM(month) + " " + day + " " + ISTTime .getHours() + ":" +ISTTime .getMinutes() + " " ;
 				
 		return newdate;
 	} catch(e){return dt;}
